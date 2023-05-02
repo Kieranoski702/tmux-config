@@ -30,6 +30,12 @@ if [ -e "$HOME/.config/tmux/tmux.conf" ]; then
 	printf "Found existing tmux.conf in your \$HOME directory. Will create a backup at $HOME/.config/tmux/tmux.conf.bak\n"
 fi
 
+# Check if .config/tmux directory exists, if not create it
+if [ ! -d "$HOME/.config/tmux" ]; then
+	printf "Creating $HOME/.config/tmux directory\n"
+	mkdir -p "$HOME/.config/tmux"
+fi
+
 # Make backup of original config and copy new one
 cp -f "$HOME/.config/tmux/tmux.conf" "$HOME/.config/tmux/tmux.conf.bak" 2>/dev/null || true
 cp tmux.conf "$HOME"/.config/tmux/
@@ -42,5 +48,11 @@ tmux new -d -s __noop >/dev/null 2>&1 || true
 tmux set-environment -g TMUX_PLUGIN_MANAGER_PATH "$HOME"/.tmux/plugins
 "$HOME"/.tmux/plugins/tpm/bin/install_plugins || true
 tmux kill-session -t __noop >/dev/null 2>&1 || true
+
+# Copy plugins folder from .tmux to .config/tmux if it does not exist in .config/tmux
+if [ ! -d "$HOME/.config/tmux/plugins" ]; then
+	printf "Creating $HOME/.config/tmux/plugins directory\n"
+	cp -r "$HOME"/.tmux/plugins "$HOME"/.config/tmux/
+fi
 
 printf "OK: Completed\n"
