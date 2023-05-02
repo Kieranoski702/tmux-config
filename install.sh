@@ -27,7 +27,7 @@ if [ ! -e "$HOME/.tmux/plugins/tpm" ]; then
 fi
 
 if [ -e "$HOME/.config/tmux/tmux.conf" ]; then
-	printf "Found existing tmux.conf in your \$HOME directory. Will create a backup at $HOME/.config/tmux/tmux.conf.bak\n"
+	printf "Found existing tmux.conf in your \$HOME directory. Will create a backup at $HOME/.config/tmux/.tmux.conf.bak\n"
 fi
 
 # Check if .config/tmux directory exists, if not create it
@@ -37,7 +37,7 @@ if [ ! -d "$HOME/.config/tmux" ]; then
 fi
 
 # Make backup of original config and copy new one
-cp -f "$HOME/.config/tmux/tmux.conf" "$HOME/.config/tmux/tmux.conf.bak" 2>/dev/null || true
+cp -f "$HOME/.config/tmux/tmux.conf" "$HOME/.config/tmux/.tmux.conf.bak" 2>/dev/null || true
 cp tmux.conf "$HOME"/.config/tmux/
 
 # Install TPM plugins.
